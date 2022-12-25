@@ -6,16 +6,12 @@ fetch('data.json')
     let comments = data.comments;
     addComments(comments);
   });
-
-
+let commentHTML = '';
 function addComments(comments){
     for(let i = 0; i<comments.length; i++){
-        console.log(comments[i].content)
-        // console.log(comments[i].replies);
-        let commentHTML = createCommentHTML(comments[i], false);
-        document.querySelector('main').innerHTML = commentHTML;
-
+        commentHTML += createCommentHTML(comments[i], false);
     }
+    document.querySelector('main').innerHTML = commentHTML;
 }
 
 
@@ -92,7 +88,7 @@ function addComments(comments){
 
 
 function createCommentHTML(commentData, isReply) {
-  console.log(":",commentData);
+  console.log(":",commentData.user.username);
   // Build the HTML for the comment
   let commentHTML = '';
   if (!isReply) {
@@ -111,12 +107,10 @@ function createCommentHTML(commentData, isReply) {
   // close inline div
   commentHTML += '</div>'
   
+  // add tag
   let replyDiv;
-  if(isReply){
-    replyDiv = `<span class="tag"> ${commentData.replyingTo} </span>` 
-  }else{
-    replyDiv = '';
-  }
+  isReply? replyDiv = `<span class="tag"> ${commentData.replyingTo} </span>` : replyDiv = '';
+
   //content div
   commentHTML += '<div class="comment-content">' + `<p>${replyDiv}${commentData.content}</p>` + '</div>';
 
@@ -144,3 +138,4 @@ function createCommentHTML(commentData, isReply) {
   }
   return commentHTML;
 }
+
