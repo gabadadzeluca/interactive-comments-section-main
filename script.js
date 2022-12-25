@@ -30,7 +30,7 @@ function createCommentHTML(commentData, isReply) {
   }else{
     className = 'comment';
   }
-  
+
   commentHTML += `<div class=${className}>`;
 
   // open inline div
@@ -43,6 +43,8 @@ function createCommentHTML(commentData, isReply) {
   commentHTML += '<div class="date">' + commentData.createdAt + '</div>';
   // close inline div
   commentHTML += '</div>'
+
+
   
   // add tag
   let replyDiv;
@@ -56,7 +58,9 @@ function createCommentHTML(commentData, isReply) {
 
   // reply button
   commentHTML += '<div class="replyBtn">' + 'Reply' + '</div>';
-
+  
+  // close the comment div
+  commentHTML += '</div>';
 
 
   // If the comment has replies, add a div for the replies
@@ -69,7 +73,7 @@ function createCommentHTML(commentData, isReply) {
     commentHTML += '</div>';
   }
 
-  commentHTML += '</div>';
+  // commentHTML += '</div>';
   if (!isReply) {
     commentHTML += '</div>';
   }
