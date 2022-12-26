@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500&display=swap');
+
+:root{
+    --light: 400;
+    --medium: 500;
+    --moderate-blue: #5357B6;
+    --soft-red: #ED6368;
+    --light-gray: #F5F6FA;
+    --dark-blue:#334253;
+    --grayish-blue: #67727E;
+}
+
+html{
+    font-size: 62.5%;
+}
+
+body{
+    font-family: 'Rubik', sans-serif;
+    font-size: 1.6rem;
+    background-color: var(--light-gray);
+    background-color: red;
+}
+
+.tag{
+    font-weight: var(--medium);
+}
+
+
+main{
+    display: flex;
+    // width: 100vw;
+    flex-direction: column;
+    *{
+        box-sizing: border-box;
+    }
+    img{
+        width: 3.2rem;
+        height: 3.2rem;
+    }
+    .comment{
+        min-width: 34.3rem;
+        width: 90%;
+    }
+    .reply{
+        min-width: 32.5rem;
+        width: 80%;
+    }
+    .comment, .reply{
+        padding: 1.6rem;
+        background-color: white;
+        border-radius: 0.8rem;
+        margin-top: 2rem;
+        .username{
+            p{
+                color: var(--dark-blue);
+                font-weight: var(--medium);
+            }
+        }
+        .inline{
+            min-width:24.3rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .score{
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-around;
+            min-width: 10rem;
+            height: 4rem;
+            background-color: var(--light-gray);
+            border-radius: 1rem;
+            .score-count{
+                color:var(--moderate-blue);
+                font-weight: var(--medium);
+            }
+            .plus,.minus{
+                color:var(--grayish-blue);
+                font-size: 1.9rem;
+            }
+        }
+        .replyBtn{
+            display: inline-flex;
+            align-items: center;
+            width: 6.6rem;
+            height: 2.4rem;
+            color:var(--moderate-blue);
+            font-weight: var(--medium);
+            background-image: url("../images/icon-reply.svg");
+            background-position: left;
+            background-repeat: no-repeat;
+            padding-left: 2rem;
+        }
+    }
+    
+
+}

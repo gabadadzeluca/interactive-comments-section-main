@@ -1,16 +1,20 @@
 "use strict"; 
 
+let currentImg;
+let currentUsername;
+
+
 fetch('data.json')
 .then(response => response.json())
   .then(data => {
     let comments = data.comments;
-    addComments(comments);
+    displayComments(comments);
     //display current user
     displayCurrentUser(data.currentUser);
   });
 
 let commentHTML = '';
-function addComments(comments){
+function displayComments(comments){
     for(let i = 0; i<comments.length; i++){
         commentHTML += createCommentHTML(comments[i], false);
     }
@@ -54,7 +58,7 @@ function createCommentHTML(commentData, isReply) {
   commentHTML += '<div class="comment-content">' + `<p>${replyDiv}${commentData.content}</p>` + '</div>';
 
   // score
-  commentHTML += '<div class="score">' + `<p class="plus">+</p><p>${commentData.score}</p><p class="minus">-</p>` + '</div>';
+  commentHTML += '<div class="score">' + `<p class="plus">+</p><p class="score-count">${commentData.score}</p><p class="minus">-</p>` + '</div>';
 
   // reply button
   commentHTML += '<div class="replyBtn">' + 'Reply' + '</div>';
@@ -81,8 +85,40 @@ function createCommentHTML(commentData, isReply) {
 }
 
 function displayCurrentUser(userData){
-  const currentImg = document.querySelector('footer img');
+  currentImg = document.querySelector('footer img');
   currentImg.src = userData.image.webp;
-  const currentUsername = userData.username;
+  currentUsername = userData.username;
   console.log("logged in as "+currentUsername);
 }
+
+
+function addComment(){
+  // get input
+  const input = document.getElementById('new-comment');
+  if(input.value.length == 0) return; // stop if it's empty
+  console.log(input.value);
+  // create a new object
+  function Comment(){
+    this.content = input.value;
+    this.createdAt = '';
+    this.score =  0;
+    this.user = {
+      image:{
+        webp: currentImg.src
+      },
+      username: currentUsername,
+    };
+    this.replies = [];
+  } 
+  // newComment.content = input.value;
+  const newComment = new Comment;
+  console.log(newComment.user.image.webp);
+
+  commentHTML += createCommentHTML(newComment,false);
+  document.querySelector('main').innerHTML = commentHTML;
+
+}
+
+const commentBtn = document.getElementById('add-comment-btn');
+console.log(commentBtn);
+commentBtn.addEventListener('click', addComment);
