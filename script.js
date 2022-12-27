@@ -3,7 +3,6 @@
 let currentImg;
 let currentUsername;
 
-
 fetch('data.json')
 .then(response => response.json())
   .then(data => {
@@ -20,6 +19,23 @@ function displayComments(comments){
     }
     document.querySelector('main').innerHTML = commentHTML;
 }
+
+// check for replybtns
+const observer = new MutationObserver(function(mutations) {
+  mutations.forEach(function(mutation) {
+    if (mutation.type === "childList") {
+      const replyBtns = document.querySelectorAll('.reply-btn');
+      if (replyBtns.length != 0) {
+        replyBtns.forEach(btn=>{
+          console.log(btn);
+          btn.addEventListener('click', addReply);
+        });
+      }
+    }
+  });
+});
+
+observer.observe(document.querySelector('main'), { childList: true });
 
 
 function createCommentHTML(commentData, isReply) {
@@ -61,23 +77,24 @@ function createCommentHTML(commentData, isReply) {
   commentHTML += '<div class="score">' + `<p class="plus">+</p><p class="score-count">${commentData.score}</p><p class="minus">-</p>` + '</div>';
 
   // reply button
-  commentHTML += '<div class="replyBtn">' + 'Reply' + '</div>';
+  commentHTML += '<div class="reply-btn">' + 'Reply' + '</div>';
   
   // close the comment div
   commentHTML += '</div>';
 
-
-  // If the comment has replies, add a div for the replies
+  //A add reply div for every comment
+  commentHTML += '<div class="comment-replies">';
+  // If the comment has replies display replies
   if (commentData.replies && commentData.replies.length > 0) {
-    commentHTML += '<div class="comment-replies">';
+    // commentHTML += '<div class="comment-replies">';
     // Add HTML for each reply
     commentData.replies.forEach(function(reply) {
       commentHTML += createCommentHTML(reply, true);
     });
-    commentHTML += '</div>';
+    // commentHTML += '</div>';
   }
+  commentHTML += '</div>';
 
-  // commentHTML += '</div>';
   if (!isReply) {
     commentHTML += '</div>';
   }
@@ -97,28 +114,44 @@ function addComment(){
   const input = document.getElementById('new-comment');
   if(input.value.length == 0) return; // stop if it's empty
   console.log(input.value);
-  // create a new object
-  function Comment(){
-    this.content = input.value;
-    this.createdAt = '';
-    this.score =  0;
-    this.user = {
-      image:{
-        webp: currentImg.src
-      },
-      username: currentUsername,
-    };
-    this.replies = [];
-  } 
-  // newComment.content = input.value;
-  const newComment = new Comment;
-  console.log(newComment.user.image.webp);
 
+  // create a new class
+  class Comment {
+    constructor() {
+      this.content = input.value;
+      this.createdAt = 'just now'; //change
+      this.score = 0;
+      this.user = {
+        image: {
+          webp: currentImg.src
+        },
+        username: currentUsername,
+      };
+      this.replies = [];
+    }
+  } 
+  const newComment = new Comment;
+
+  // display comment
   commentHTML += createCommentHTML(newComment,false);
   document.querySelector('main').innerHTML = commentHTML;
 
+  //reset value
+  input.value = '';
 }
 
 const commentBtn = document.getElementById('add-comment-btn');
-console.log(commentBtn);
 commentBtn.addEventListener('click', addComment);
+
+
+function addReply(){
+  let parentDiv = this.parentElement.parentElement;
+
+  if(parentDiv.classList == 'comment-thread'){
+    parentDiv = parentDiv.children[1];
+  }
+  console.log(parentDiv);
+}
+
+
+
