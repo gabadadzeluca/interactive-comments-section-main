@@ -20,6 +20,23 @@ function displayComments(comments){
     document.querySelector('main').innerHTML = commentHTML;
 }
 
+
+// comment class
+class Comment {
+  constructor() {
+    this.content = '';   //input.value;
+    this.createdAt = 'just now'; //change
+    this.score = 0;
+    this.user = {
+      image: {
+        webp: currentImg.src
+      },
+      username: currentUsername,
+    };
+    this.replies = [];
+  }
+} 
+
 // check for replybtns
 const observer = new MutationObserver(function(mutations) {
   mutations.forEach(function(mutation) {
@@ -27,7 +44,6 @@ const observer = new MutationObserver(function(mutations) {
       const replyBtns = document.querySelectorAll('.reply-btn');
       if (replyBtns.length != 0) {
         replyBtns.forEach(btn=>{
-          console.log(btn);
           btn.addEventListener('click', addReply);
         });
       }
@@ -115,23 +131,9 @@ function addComment(){
   if(input.value.length == 0) return; // stop if it's empty
   console.log(input.value);
 
-  // create a new class
-  class Comment {
-    constructor() {
-      this.content = input.value;
-      this.createdAt = 'just now'; //change
-      this.score = 0;
-      this.user = {
-        image: {
-          webp: currentImg.src
-        },
-        username: currentUsername,
-      };
-      this.replies = [];
-    }
-  } 
+  
   const newComment = new Comment;
-
+  newComment.content = input.value;
   // display comment
   commentHTML += createCommentHTML(newComment,false);
   document.querySelector('main').innerHTML = commentHTML;
