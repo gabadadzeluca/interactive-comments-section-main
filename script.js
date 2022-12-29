@@ -124,6 +124,9 @@ function createCommentHTML(commentData, isReply) {
     });
     // commentHTML += '</div>';
   }
+  commentHTML += '</div>';  
+  
+  // close the container
   commentHTML += '</div>';
 
   if (!isReply) {
