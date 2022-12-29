@@ -7,9 +7,11 @@ fetch('data.json')
 .then(response => response.json())
   .then(data => {
     let comments = data.comments;
-    displayComments(comments);
     //display current user
     displayCurrentUser(data.currentUser);
+    displayComments(comments);
+    
+    
   });
 
 let commentHTML = '';
@@ -54,6 +56,13 @@ const observer = new MutationObserver(function(mutations) {
 observer.observe(document.querySelector('main'), { childList: true });
 
 
+function displayCurrentUser(userData){
+  currentImg = document.querySelector('footer img');
+  currentImg.src = userData.image.webp;
+  currentUsername = userData.username;
+  console.log("logged in as "+currentUsername);
+}
+
 function createCommentHTML(commentData, isReply) {
   // Build the HTML for the comment
   let commentHTML = '';
@@ -79,8 +88,6 @@ function createCommentHTML(commentData, isReply) {
   commentHTML += '<div class="date">' + commentData.createdAt + '</div>';
   // close inline div
   commentHTML += '</div>'
-
-
   
   // add tag
   let replyDiv;
@@ -96,6 +103,12 @@ function createCommentHTML(commentData, isReply) {
   commentHTML += '<div class="reply-btn">' + 'Reply' + '</div>';
   
   // close the comment div
+  commentHTML += '</div>';
+
+  // add reply div&button to every element
+  commentHTML += '<div class="reply-to-div">' + `<img src=${currentImg.src}>`;
+  commentHTML += '<input type="textarea" class="reply-to-container">';
+  commentHTML += '<button class="add-reply-btn">REPLY</button>';
   commentHTML += '</div>';
 
   //A add reply div for every comment
@@ -117,12 +130,6 @@ function createCommentHTML(commentData, isReply) {
   return commentHTML;
 }
 
-function displayCurrentUser(userData){
-  currentImg = document.querySelector('footer img');
-  currentImg.src = userData.image.webp;
-  currentUsername = userData.username;
-  console.log("logged in as "+currentUsername);
-}
 
 
 function addComment(){
@@ -131,7 +138,6 @@ function addComment(){
   if(input.value.length == 0) return; // stop if it's empty
   console.log(input.value);
 
-  
   const newComment = new Comment;
   newComment.content = input.value;
   // display comment
@@ -148,11 +154,18 @@ commentBtn.addEventListener('click', addComment);
 
 function addReply(){
   let parentDiv = this.parentElement.parentElement;
-
   if(parentDiv.classList == 'comment-thread'){
     parentDiv = parentDiv.children[1];
   }
+
+
+  // comment/reply that user is replying to
+  const commentDiv = this.parentElement;
+  console.log("comment/reply:",commentDiv);
   console.log(parentDiv);
+  
+
+
 }
 
 
