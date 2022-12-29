@@ -26,6 +26,7 @@ function displayComments(comments){
 // comment class
 class Comment {
   constructor() {
+    this.replyingTo = '';
     this.content = '';   //input.value;
     this.createdAt = 'just now'; //change
     this.score = 0;
@@ -192,5 +193,12 @@ function displayReply(){
 function addReply(){
   const input = this.parentElement.children[1];
   console.log(input.value);
+
+  const newReply = new Comment();
+  newReply.replyingTo = '';
+  newReply.content = input.value;
+  
+  commentHTML += createCommentHTML(newReply,true);
+  document.querySelector('main').innerHTML = commentHTML;
 
 }
