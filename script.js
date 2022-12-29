@@ -44,10 +44,16 @@ const observer = new MutationObserver(function(mutations) {
   mutations.forEach(function(mutation) {
     if (mutation.type === "childList") {
       const replyBtns = document.querySelectorAll('.reply-btn');
+      const replyInputs = document.querySelectorAll('.reply-to-div button');
       if (replyBtns.length != 0) {
         replyBtns.forEach(btn=>{
-          btn.addEventListener('click', addReply);
+          btn.addEventListener('click', displayReply)
         });
+      }
+      if(replyInputs.length != 0) {
+       replyInputs.forEach(button=>{
+        button.addEventListener('click', addReply);
+       });
       }
     }
   });
@@ -125,7 +131,7 @@ function createCommentHTML(commentData, isReply) {
     // commentHTML += '</div>';
   }
   commentHTML += '</div>';  
-  
+
   // close the container
   commentHTML += '</div>';
 
@@ -157,21 +163,34 @@ const commentBtn = document.getElementById('add-comment-btn');
 commentBtn.addEventListener('click', addComment);
 
 
-function addReply(){
-  let parentDiv = this.parentElement.parentElement;
-  if(parentDiv.classList == 'comment-thread'){
-    parentDiv = parentDiv.children[1];
-  }
-
-
+function displayReply(){
+  const parentDiv = this.parentElement.parentElement;
   // comment/reply that user is replying to
   const commentDiv = this.parentElement;
   console.log("comment/reply:",commentDiv);
-  console.log(parentDiv);
-  
+  console.log("parent:",parentDiv);
 
+  // pop up reply div
+  const replyInputDiv = parentDiv.children[1];
+  // if closed pop up
+  replyInputDiv.style.display = 'inline-flex';
+  // else close
+
+
+  // get comment/reply div 
+  const replyingTo = commentDiv.children[0].querySelector('.username').innerText;
+
+  //access input div
+  const input = replyInputDiv.querySelector('input');
+  // tag the user
+  input.value = '@' + replyingTo + ' ';
 
 }
 
 
 
+function addReply(){
+  const input = this.parentElement.children[1];
+  console.log(input.value);
+
+}
