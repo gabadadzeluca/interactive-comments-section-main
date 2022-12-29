@@ -75,6 +75,8 @@ function createCommentHTML(commentData, isReply) {
   }else{
     className = 'comment';
   }
+  // open container div
+  commentHTML += `<div class="${className}-container">`;
 
   commentHTML += `<div class=${className}>`;
 
@@ -101,7 +103,7 @@ function createCommentHTML(commentData, isReply) {
 
   // reply button
   commentHTML += '<div class="reply-btn">' + 'Reply' + '</div>';
-  
+    
   // close the comment div
   commentHTML += '</div>';
 
