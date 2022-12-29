@@ -44,6 +44,7 @@ class Comment {
 const observer = new MutationObserver(function(mutations) {
   mutations.forEach(function(mutation) {
     if (mutation.type === "childList") {
+
       const replyBtns = document.querySelectorAll('.reply-btn');
       const replyInputs = document.querySelectorAll('.reply-to-div button');
       if (replyBtns.length != 0) {
@@ -61,7 +62,6 @@ const observer = new MutationObserver(function(mutations) {
 });
 
 observer.observe(document.querySelector('main'), { childList: true });
-
 
 function displayCurrentUser(userData){
   currentImg = document.querySelector('footer img');
@@ -203,7 +203,13 @@ function addReply(){
   newReply.replyingTo = replyingTo;
   newReply.content = input.value.slice(spaceIndex); // get everything except the tag word
   
-  commentHTML += createCommentHTML(newReply,true);
-  document.querySelector('main').innerHTML = commentHTML;
 
+  let replyToDiv = (this.parentElement.parentElement.lastElementChild);
+  replyToDiv.innerHTML += createCommentHTML(newReply, true);
+  document.querySelector('main').innerHTML + replyToDiv;
+
+  // append an element so that observer detects the changes
+  const newDiv = document.createElement('div');
+  document.querySelector('main').appendChild(newDiv);
+  newDiv.remove(); // remove the element
 }
