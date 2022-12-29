@@ -100,7 +100,7 @@ function createCommentHTML(commentData, isReply) {
   
   // add tag
   let replyDiv;
-  isReply? replyDiv = `<span class="tag"> ${commentData.replyingTo} </span>` : replyDiv = '';
+  isReply? replyDiv = `<span class="tag">@${commentData.replyingTo}</span>` : replyDiv = '';
 
   //content div
   commentHTML += '<div class="comment-content">' + `<p>${replyDiv}${commentData.content}</p>` + '</div>';
@@ -165,12 +165,11 @@ commentBtn.addEventListener('click', addComment);
 
 
 function displayReply(){
+
+  // parent container
   const parentDiv = this.parentElement.parentElement;
   // comment/reply that user is replying to
   const commentDiv = this.parentElement;
-  console.log("comment/reply:",commentDiv);
-  console.log("parent:",parentDiv);
-
   // pop up reply div
   const replyInputDiv = parentDiv.children[1];
   // if closed pop up
@@ -192,11 +191,17 @@ function displayReply(){
 
 function addReply(){
   const input = this.parentElement.children[1];
-  console.log(input.value);
+
+  // Find the first space in the string
+  const spaceIndex = input.value.indexOf(" ");
+
+  // Extract the first word and remove '@'
+  const replyingTo = input.value.substr(0, spaceIndex).slice(1);
+
 
   const newReply = new Comment();
-  newReply.replyingTo = '';
-  newReply.content = input.value;
+  newReply.replyingTo = replyingTo;
+  newReply.content = input.value.slice(spaceIndex); // get everything except the tag word
   
   commentHTML += createCommentHTML(newReply,true);
   document.querySelector('main').innerHTML = commentHTML;
