@@ -49,6 +49,9 @@ const observer = new MutationObserver(function(mutations) {
       const replyInputs = document.querySelectorAll('.reply-to-div button');
       if (replyBtns.length != 0) {
         replyBtns.forEach(btn=>{
+          // get 'reply-to-div' elements
+          const replyToDiv =  btn.parentElement.parentElement.children[1];
+          replyToDiv.style.display = 'none';
           btn.addEventListener('click', displayReply)
         });
       }
@@ -57,6 +60,7 @@ const observer = new MutationObserver(function(mutations) {
         button.addEventListener('click', addReply);
        });
       }
+
     }
   });
 });
@@ -164,8 +168,9 @@ const commentBtn = document.getElementById('add-comment-btn');
 commentBtn.addEventListener('click', addComment);
 
 
+let replyingTo;
 function displayReply(){
-
+  
   // parent container
   const parentDiv = this.parentElement.parentElement;
   // comment/reply that user is replying to
@@ -173,12 +178,14 @@ function displayReply(){
   // pop up reply div
   const replyInputDiv = parentDiv.children[1];
   // if closed pop up
-  replyInputDiv.style.display = 'inline-flex';
-  // else close
-
+  if(replyInputDiv.style.display == 'none'){
+    replyInputDiv.style.display = 'inline-flex';
+  }else{//close
+    replyInputDiv.style.display = 'none';
+  }
 
   // get comment/reply div 
-  const replyingTo = commentDiv.children[0].querySelector('.username').innerText;
+  replyingTo = commentDiv.children[0].querySelector('.username').innerText;
 
   //access input div
   const input = replyInputDiv.querySelector('input');
@@ -191,24 +198,22 @@ function displayReply(){
 
 function addReply(){
   const input = this.parentElement.children[1];
-
   // Find the first space in the string
   const spaceIndex = input.value.indexOf(" ");
-
-  // Extract the first word and remove '@'
-  const replyingTo = input.value.substr(0, spaceIndex).slice(1);
+  if(input.value.slice(spaceIndex + 1).length == 0) return; // stop if it's empty
 
 
+  // create new reply div
   const newReply = new Comment();
   newReply.replyingTo = replyingTo;
   newReply.content = input.value.slice(spaceIndex); // get everything except the tag word
   
-
+  // div that the comment will be appended to  
   let replyToDiv = (this.parentElement.parentElement.lastElementChild);
   replyToDiv.innerHTML += createCommentHTML(newReply, true);
   document.querySelector('main').innerHTML + replyToDiv;
 
-  // append an element so that observer detects the changes
+  // append an empty element so that observer detects the changes
   const newDiv = document.createElement('div');
   document.querySelector('main').appendChild(newDiv);
   newDiv.remove(); // remove the element
