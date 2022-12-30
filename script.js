@@ -47,6 +47,9 @@ const observer = new MutationObserver(function(mutations) {
 
       const replyBtns = document.querySelectorAll('.reply-btn');
       const replyInputs = document.querySelectorAll('.reply-to-div button');
+
+      const scorePluses = document.querySelectorAll('.plus');
+      const scoreMinuses = document.querySelectorAll('.minus');
       if (replyBtns.length != 0) {
         replyBtns.forEach(btn=>{
           // get 'reply-to-div' elements
@@ -59,6 +62,14 @@ const observer = new MutationObserver(function(mutations) {
        replyInputs.forEach(button=>{
         button.addEventListener('click', addReply);
        });
+      }
+      if(scoreMinuses.length != 0 && scorePluses.length != 0){
+        scoreMinuses.forEach(minus=>{
+          minus.addEventListener('click', changeScore);
+        });
+        scorePluses.forEach(plus=>{
+          plus.addEventListener('click', changeScore)
+        });
       }
 
     }
@@ -110,7 +121,7 @@ function createCommentHTML(commentData, isReply) {
   commentHTML += '<div class="comment-content">' + `<p>${replyDiv}${commentData.content}</p>` + '</div>';
 
   // score
-  commentHTML += '<div class="score">' + `<p class="plus">+</p><p class="score-count">${commentData.score}</p><p class="minus">-</p>` + '</div>';
+  commentHTML += '<div class="score">' + `<p class="plus" data-voted="false">+</p><p class="score-count">${commentData.score}</p><p class="minus" data-voted="false">-</p>` + '</div>';
 
   // reply button
   commentHTML += '<div class="reply-btn">' + 'Reply' + '</div>';
@@ -202,7 +213,6 @@ function addReply(){
   const spaceIndex = input.value.indexOf(" ");
   if(input.value.slice(spaceIndex + 1).length == 0) return; // stop if it's empty
 
-
   // create new reply div
   const newReply = new Comment();
   newReply.replyingTo = replyingTo;
@@ -218,3 +228,30 @@ function addReply(){
   document.querySelector('main').appendChild(newDiv);
   newDiv.remove(); // remove the element
 }
+
+
+// add and subtract score
+function changeScore(){
+  if(this.getAttribute('data-voted') == 'true') return;
+  let action = this.innerHTML;
+  let score = this.parentElement.children[1].innerHTML;
+
+  // get both elements
+  let oppositeAction = action === '+' ? 'minus' : 'plus';
+  let oppositeElement = this.parentElement.querySelector(`.${oppositeAction}`);
+  
+  if(action == '+'){
+    score++;
+  }else{
+    score--;
+  }
+  
+  this.parentElement.children[1].innerHTML = score;
+  this.setAttribute('data-voted', true);
+  // if they're both clicked, the value is same, reset both to false;
+  if(this.getAttribute('data-voted') == "true" && oppositeElement.getAttribute('data-voted') == "true"){
+    this.setAttribute('data-voted', false);
+    oppositeElement.setAttribute('data-voted', false);
+  }
+}
+
