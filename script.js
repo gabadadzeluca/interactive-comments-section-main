@@ -65,6 +65,11 @@ const observer = new MutationObserver(function(mutations) {
       const deleteBtns = document.querySelectorAll('.delete-btn');
       // edit post buttons
       const editBtns = document.querySelectorAll('.edit-btn');
+
+      // update post buttons
+      const updateBtns = document.querySelectorAll('.update-btn');
+
+
       if (replyBtns.length != 0) {
         replyBtns.forEach(btn=>{
           // get 'reply-to-div' elements
@@ -88,12 +93,17 @@ const observer = new MutationObserver(function(mutations) {
       }
       if(editBtns.length != 0) {
         editBtns.forEach(button=>{
-          button.addEventListener('click', editPost);
+          button.addEventListener('click', displayEditDiv);
         });
       }
       if(deleteBtns.length != 0) {
         deleteBtns.forEach(button=>{
           button.addEventListener('click', deletePost);
+        });
+      }
+      if(updateBtns.length != 0){
+        updateBtns.forEach(btn=>{
+          btn.addEventListener('click', updatePost);
         });
       }
     }
@@ -152,9 +162,15 @@ function createCommentHTML(commentData, isReply) {
   //content div
   commentHTML += '<div class="comment-content">' + `<p>${replyDiv}${commentData.content}</p>`;
   // textarea for editing comment
+  commentHTML += '<div class="comment-edit-div">';
   commentHTML += `<input class="comment-edit-form" type="textarea" value="${commentData.content}">`
+  //add update button
+  commentHTML += '<button class="update-btn" value="update">UPDATE</button>';
+  // close comment-edit-div
+  commentHTML += '</div>'
   // close content div
   commentHTML += '</div>'
+
   // score
   commentHTML += '<div class="score">' + `<p class="plus" data-voted="false">+</p><p class="score-count">${commentData.score}</p><p class="minus" data-voted="false">-</p>` + '</div>';
 
@@ -311,11 +327,26 @@ function deletePost(){
 
 
 
-function editPost(){
+function displayEditDiv(){
   // comment/reply div
   const commentDiv = this.parentElement.parentElement.parentElement;
-  console.log(commentDiv);
-  const content = commentDiv.querySelector('.comment-edit-form');
-  console.log(content);
-  content.style.display = 'block';
+  const editDiv = commentDiv.querySelector('.comment-edit-div');
+
+  //hide comment-content
+  const content = commentDiv.querySelector('.comment-content p');
+  content.style.display = 'none';
+  //display edit div
+  editDiv.style.display = 'block';
+}
+
+
+function updatePost(){
+  const input = this.parentElement.querySelector('input')
+  const commentContent = this.parentElement.parentElement.querySelector('p');
+  // save tag
+  const tag = commentContent.querySelector('span').innerHTML;
+
+  commentContent.innerHTML = '<span class="tag">' +  tag + '</span> ' + input.value;
+  input.parentElement.style.display = 'none';
+  commentContent.style.display = 'block';
 }
