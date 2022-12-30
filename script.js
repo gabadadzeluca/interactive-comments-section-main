@@ -40,7 +40,7 @@ class Comment {
   }
 } 
 
-// check for replybtns
+// check for elements added from js
 const observer = new MutationObserver(function(mutations) {
   mutations.forEach(function(mutation) {
     if (mutation.type === "childList") {
@@ -110,6 +110,14 @@ function createCommentHTML(commentData, isReply) {
   commentHTML += '<div class="username">' + `<p>${commentData.user.username}</p></div>`;
   // add date
   commentHTML += '<div class="date">' + commentData.createdAt + '</div>';
+
+  // if current user is the author let them delete or edit it
+  if(commentData.user.username == currentUsername){
+    commentHTML += '<div class="buttons-div">';
+    commentHTML += '<button class="delete-btn">Delete</button>';
+    commentHTML += '<button class=edit-btn">Edit</button>' +  '</div>';
+  }
+
   // close inline div
   commentHTML += '</div>'
   
@@ -253,5 +261,12 @@ function changeScore(){
     this.setAttribute('data-voted', false);
     oppositeElement.setAttribute('data-voted', false);
   }
+
+
+  // add class to style checked element
 }
+
+
+// let user delete their posts
+
 
