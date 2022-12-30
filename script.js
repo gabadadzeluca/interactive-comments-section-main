@@ -344,9 +344,12 @@ function updatePost(){
   const input = this.parentElement.querySelector('input')
   const commentContent = this.parentElement.parentElement.querySelector('p');
   // save tag
-  const tag = commentContent.querySelector('span').innerHTML;
-
-  commentContent.innerHTML = '<span class="tag">' +  tag + '</span> ' + input.value;
+  const tag = commentContent.querySelector('span');
+  if(tag != undefined){
+    commentContent.innerHTML = '<span class="tag">' +  tag.innerHTML + '</span> ' + input.value;
+  }else{
+    commentContent.innerHTML = input.value;
+  }
   input.parentElement.style.display = 'none';
   commentContent.style.display = 'block';
 }
