@@ -150,8 +150,11 @@ function createCommentHTML(commentData, isReply) {
   isReply? replyDiv = `<span class="tag">@${commentData.replyingTo}</span>` : replyDiv = '';
 
   //content div
-  commentHTML += '<div class="comment-content">' + `<p>${replyDiv}${commentData.content}</p>` + '</div>';
-
+  commentHTML += '<div class="comment-content">' + `<p>${replyDiv}${commentData.content}</p>`;
+  // textarea for editing comment
+  commentHTML += `<input class="comment-edit-form" type="textarea" value="${commentData.content}">`
+  // close content div
+  commentHTML += '</div>'
   // score
   commentHTML += '<div class="score">' + `<p class="plus" data-voted="false">+</p><p class="score-count">${commentData.score}</p><p class="minus" data-voted="false">-</p>` + '</div>';
 
@@ -292,23 +295,27 @@ function changeScore(){
 
 // let user delete their posts
 function deletePost(){
-  const commentDiv = this.parentElement.parentElement.parentElement;
+  const commentDiv = this.parentElement.parentElement.parentElement.parentElement;
   // pop up a menu
   popUpMenu.style.display = 'flex';
-  deleteConfirm.addEventListener('click', deleteComment);
+
+  deleteConfirm.addEventListener('click', ()=>{
+    commentDiv.remove();
+    popUpMenu.style.display = 'none';
+  });
+
   cancelConfirm.addEventListener('click', ()=>{
     popUpMenu.style.display = 'none';
   });
-  function deleteComment(){
-    commentDiv.remove();
-    popUpMenu.style.display = 'none';
-  }
-  
 }
 
 
 
 function editPost(){
+  // comment/reply div
   const commentDiv = this.parentElement.parentElement.parentElement;
-  
+  console.log(commentDiv);
+  const content = commentDiv.querySelector('.comment-edit-form');
+  console.log(content);
+  content.style.display = 'block';
 }
