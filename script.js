@@ -3,6 +3,13 @@
 let currentImg;
 let currentUsername;
 
+// pop up menu
+const popUpMenu = document.querySelector('.pop-up-menu');
+const deleteConfirm = popUpMenu.querySelector('[value="delete"]');
+const cancelConfirm = popUpMenu.querySelector('[value="cancel"]');
+
+
+
 fetch('data.json')
 .then(response => response.json())
   .then(data => {
@@ -79,8 +86,15 @@ const observer = new MutationObserver(function(mutations) {
           plus.addEventListener('click', changeScore)
         });
       }
-      if(editBtns.length != 0){
-        console.log(editBtns);
+      if(editBtns.length != 0) {
+        editBtns.forEach(button=>{
+          button.addEventListener('click', editPost);
+        });
+      }
+      if(deleteBtns.length != 0) {
+        deleteBtns.forEach(button=>{
+          button.addEventListener('click', deletePost);
+        });
       }
     }
   });
@@ -276,7 +290,25 @@ function changeScore(){
   // add class to style checked element
 }
 
-
 // let user delete their posts
+function deletePost(){
+  const commentDiv = this.parentElement.parentElement.parentElement;
+  // pop up a menu
+  popUpMenu.style.display = 'flex';
+  deleteConfirm.addEventListener('click', deleteComment);
+  cancelConfirm.addEventListener('click', ()=>{
+    popUpMenu.style.display = 'none';
+  });
+  function deleteComment(){
+    commentDiv.remove();
+    popUpMenu.style.display = 'none';
+  }
+  
+}
 
 
+
+function editPost(){
+  const commentDiv = this.parentElement.parentElement.parentElement;
+  
+}
