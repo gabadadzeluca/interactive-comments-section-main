@@ -45,11 +45,19 @@ const observer = new MutationObserver(function(mutations) {
   mutations.forEach(function(mutation) {
     if (mutation.type === "childList") {
 
+      //reply buttons
       const replyBtns = document.querySelectorAll('.reply-btn');
+      // reply input-div buttons
       const replyInputs = document.querySelectorAll('.reply-to-div button');
-
+      
+      // score div elemenets
       const scorePluses = document.querySelectorAll('.plus');
       const scoreMinuses = document.querySelectorAll('.minus');
+
+      //delete post buttons
+      const deleteBtns = document.querySelectorAll('.delete-btn');
+      // edit post buttons
+      const editBtns = document.querySelectorAll('.edit-btn');
       if (replyBtns.length != 0) {
         replyBtns.forEach(btn=>{
           // get 'reply-to-div' elements
@@ -71,7 +79,9 @@ const observer = new MutationObserver(function(mutations) {
           plus.addEventListener('click', changeScore)
         });
       }
-
+      if(editBtns.length != 0){
+        console.log(editBtns);
+      }
     }
   });
 });
@@ -115,7 +125,7 @@ function createCommentHTML(commentData, isReply) {
   if(commentData.user.username == currentUsername){
     commentHTML += '<div class="buttons-div">';
     commentHTML += '<button class="delete-btn">Delete</button>';
-    commentHTML += '<button class=edit-btn">Edit</button>' +  '</div>';
+    commentHTML += '<button class="edit-btn">Edit</button>' +  '</div>';
   }
 
   // close inline div
