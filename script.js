@@ -148,8 +148,8 @@ function createCommentHTML(commentData, isReply) {
   // if current user is the author let them delete or edit it
   if(commentData.user.username == currentUsername){
     commentHTML += '<div class="buttons-div">';
-    commentHTML += '<button class="delete-btn">Delete</button>';
-    commentHTML += '<button class="edit-btn">Edit</button>' +  '</div>';
+    commentHTML += '<div class="delete-btn">Delete</div>';
+    commentHTML += '<div class="edit-btn">Edit</div>' +  '</div>';
   }
 
   // close inline div
