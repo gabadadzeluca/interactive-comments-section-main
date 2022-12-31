@@ -320,12 +320,19 @@ function changeScore(){
 
 // let user delete their posts
 function deletePost(){
-  const commentDiv = this.parentElement.parentElement.parentElement.parentElement;
+  const commentContainer = this.parentElement.parentElement.parentElement.parentElement;
+
+  const reply = this.parentElement.parentElement;
+
   // pop up a menu
   popUpMenu.style.display = 'flex';
-
   deleteConfirm.addEventListener('click', ()=>{
-    commentDiv.remove();
+    // commentContainer.remove();
+    if(reply.className == 'reply'){
+      reply.remove();
+    }else{
+      commentContainer.remove();
+    }
     popUpMenu.style.display = 'none';
   });
 
