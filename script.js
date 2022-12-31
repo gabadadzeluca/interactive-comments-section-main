@@ -146,8 +146,9 @@ function createCommentHTML(commentData, isReply) {
   commentHTML += '<div class="date">' + commentData.createdAt + '</div>';
 
   // if current user is the author let them delete or edit it
+  // desktop layout buttons
   if(commentData.user.username == currentUsername){
-    commentHTML += '<div class="buttons-div">';
+    commentHTML += '<div class="buttons-div desktop-btns">';
     commentHTML += '<div class="delete-btn">Delete</div>';
     commentHTML += '<div class="edit-btn">Edit</div>' +  '</div>';
   }
@@ -174,8 +175,16 @@ function createCommentHTML(commentData, isReply) {
   // score
   commentHTML += '<div class="score">' + `<p class="plus" data-voted="false">+</p><p class="score-count">${commentData.score}</p><p class="minus" data-voted="false">-</p>` + '</div>';
 
-  // reply button
-  commentHTML += '<div class="reply-btn">' + 'Reply' + '</div>';
+
+  if(commentData.user.username == currentUsername){
+    commentHTML += '<div class="buttons-div mobile-btns">';
+    commentHTML += '<div class="delete-btn">Delete</div>';
+    commentHTML += '<div class="edit-btn">Edit</div>' +  '</div>';
+  }else{
+    // reply button
+    commentHTML += '<div class="reply-btn">' + 'Reply' + '</div>';
+  }
+  
     
   // close the comment div
   commentHTML += '</div>';
