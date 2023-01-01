@@ -152,6 +152,9 @@ function createCommentHTML(commentData, isReply) {
   commentHTML += '<div class="comment-author">' + `<img src=${commentData.user.image.webp}>` + '</div>';
   //add username
   commentHTML += '<div class="username">' + `<p>${commentData.user.username}</p></div>`;
+  if(commentData.user.username == currentUsername){
+    commentHTML += '<span class="user">you</span>';
+  }
   // add date
   commentHTML += '<div class="date">' + commentData.createdAt + '</div>';
   // close user-date div
@@ -378,7 +381,7 @@ function displayEditDiv(){
   const content = commentDiv.querySelector('.comment-content p');
   content.style.display = 'none';
   //display edit div
-  editDiv.style.display = 'block';
+  editDiv.style.display = 'flex';
 }
 
 
