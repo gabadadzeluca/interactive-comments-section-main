@@ -23,13 +23,13 @@ Users should be able to:
 
 ### Screenshot
 
-()![screenshot1](./images/screenshot.png)
-()![screenshot1](./images/screenshot1.png)
+![screenshot1](./images/screenshot.png)
+![screenshot1](./images/screenshot1.png)
 
 ### Links
 
 - Solution URL: [GitHub](https://github.com/gabadadzeluca/interactive-comments-section-main)
-- Live Site URL: [Live URL]()
+- Live Site URL: [Live URL](https://gabadadzeluca.github.io/interactive-comments-section-main/)
 
 ## My process
 

@@ -16,3 +16,4 @@
 .prettierignore
 style/style.css.map
 package.json
+package-lock.json
