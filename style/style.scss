@@ -98,6 +98,9 @@ button{
     font-weight: var(--medium);
     font-size: 1.6rem;
 }
+button:hover{
+    cursor: pointer;
+}
 input[type="textarea"]{
     border: 1px solid #E9EBF0;
     box-sizing: border-box;
@@ -116,6 +119,9 @@ input[type="textarea"]{
         background-repeat: no-repeat;
         padding-left: 1.5rem;
         box-sizing: border-box;
+    }
+    *:hover{
+        cursor: pointer;
     }
     .delete-btn{
         background-image: url("../images/icon-delete.svg");
@@ -187,12 +193,14 @@ main{
         }
         .date{
             color: var(--grayish-blue);
+            margin-left: 2rem;
         }
         .username{
             p{
                 color: var(--dark-blue);
                 font-weight: var(--medium);
             }
+
         }
         .inline{
             min-width:25rem;
@@ -205,6 +213,16 @@ main{
             align-items: center;
             justify-content: space-between;
             min-width: 23rem;
+            *{
+                margin-right: 0.5rem;
+            }
+        }
+        .user{
+            background-color: var(--moderate-blue);
+            color: white;
+            border-radius:0.4rem;
+            padding: 0.1rem 0.6rem 0.3rem;
+            font-size: 1.3rem;
         }
         .score{
             display: inline-flex;
@@ -283,6 +301,7 @@ footer{
     display: flex;
     justify-content: center;
     .comment-form{
+        border-radius: 0.8rem;
         margin-top: 2rem;
         margin-bottom: 2rem;
         background-color: white;
