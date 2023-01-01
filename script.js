@@ -75,7 +75,7 @@ const observer = new MutationObserver(function(mutations) {
           // get 'reply-to-div' elements
           const replyToDiv =  btn.parentElement.parentElement.parentElement.parentElement.querySelector('.reply-to-div');
           replyToDiv.style.display = 'none';
-          btn.addEventListener('click', displayReply)
+          btn.addEventListener('click', displayReply);
         });
       }
       if(replyInputs.length != 0) {
@@ -142,8 +142,8 @@ function createCommentHTML(commentData, isReply) {
   // score (desktop)
   commentHTML += '<div class="score desktop">' + `<p class="plus" data-voted="false">+</p><p class="score-count">${commentData.score}</p><p class="minus" data-voted="false">-</p>` + '</div>';
 
-  //div 
-  commentHTML += '<div>'
+  // comment main 
+  commentHTML += '<div class="comment-main">'
   // open inline div
   commentHTML += '<div class="inline">';
   // user div
@@ -201,9 +201,11 @@ function createCommentHTML(commentData, isReply) {
     commentHTML += '<div class="reply-btn  mobile">' + 'Reply' + '</div>';
   }
   // close footer div
-  commentHTML += '</div>'  
-  // close div I just opened
-  commentHTML += '</div>'
+  commentHTML += '</div>';
+
+  // close comment main
+  commentHTML += '</div>';
+
   // close the comment div
   commentHTML += '</div>';
 
@@ -222,7 +224,6 @@ function createCommentHTML(commentData, isReply) {
     commentData.replies.forEach(function(reply) {
       commentHTML += createCommentHTML(reply, true);
     });
-    // commentHTML += '</div>';
   }
   commentHTML += '</div>';  
 
@@ -262,12 +263,12 @@ commentBtns.forEach(btn=>{
 let replyingTo;
 function displayReply(){
   // parent container
-  const parentDiv = this.parentElement.parentElement.parentElement;
+  const parentDiv = this.parentElement.parentElement.parentElement.parentElement;
 
   // comment/reply that user is replying to
-  const commentDiv = this.parentElement.parentElement;
+  const commentDiv = this.parentElement.parentElement.parentElement;
   // pop up reply div
-  const replyInputDiv = parentDiv.children[1];
+  const replyInputDiv = parentDiv.querySelector('.reply-to-div');
   // if closed pop up
   if(replyInputDiv.style.display == 'none'){
     replyInputDiv.style.display = 'inline-flex';
