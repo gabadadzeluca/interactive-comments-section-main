@@ -3,7 +3,7 @@
 :root{
     --light: 400;
     --medium: 500;
-    --moderate-blue: #5357B6;
+    --moderate-blue: #5357B6; 
     --soft-red: #ED6368;
     --light-gray: #F5F6FA;
     --dark-blue:#334253;
@@ -18,18 +18,92 @@ body{
     font-family: 'Rubik', sans-serif;
     font-size: 1.6rem;
     background-color: var(--light-gray);
-    background-color: red;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+img{
+    width: 3.2rem;
+    height: 3.2rem;
 }
 
 .tag{
     font-weight: var(--medium);
+    color: var(--moderate-blue);
+}
+.pop-up-menu{
+    box-sizing: border-box;
+    padding: 2.4rem 2.7rem;
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    background-color: white;
+    width: 34.3rem;
+    height: 22.4rem;
+    justify-content: space-between;
+    border-radius: 0.8rem;
+
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
+.comment-edit-div{
+    display: none;
+}
+.comment-edit-form{
+    width: 100%;
+    height: 9.6rem;
+    // overflow: hidden;
+    resize: none;
+    white-space: pre-wrap;
+    font-size: 1.6rem;
+}
+button{
+    width: 10.4rem;
+    height: 4.8rem;
+    background-color: var(--moderate-blue);
+    color: white;
+    border-radius: 0.8rem;
+    font-weight: var(--medium);
+    font-size: 1.6rem;
+}
+input[type="textarea"]{
+    border: 1px solid #E9EBF0;
+}
+
+// edit and delete 
+.buttons-div{
+    display: inline-flex;
+    width: 15.3rem;
+    justify-content: space-around;
+    *{
+        background-position: left;
+        background-repeat: no-repeat;
+        padding-left: 1.5rem;
+        box-sizing: border-box;
+    }
+    .delete-btn{
+        background-image: url("../images/icon-delete.svg");
+        color: var(--soft-red);
+    }
+    .edit-btn{
+        background-image: url("../images/icon-edit.svg");
+        color: var(--moderate-blue);
+    }
+}
+.desktop-btns{
+    display: none;
+}
 
 main{
     display: flex;
     // width: 100vw;
+    min-width: 34.3rem;
+    width: 90%;
     flex-direction: column;
+    align-items: center;
     *{
         box-sizing: border-box;
     }
@@ -37,13 +111,36 @@ main{
         width: 3.2rem;
         height: 3.2rem;
     }
-    .comment{
+    .comment-thread{
         min-width: 34.3rem;
+        width: 100%;
+
+    }
+   
+    .comment-container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .comment-replies{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+    .reply-container{
+        display: flex;
+        // width: 32.5rem;
         width: 90%;
+        min-width: 32.5rem;
+        flex-direction: column;
+    } 
+    .comment{
+        width: 100%;
     }
     .reply{
         min-width: 32.5rem;
-        width: 80%;
+        width: 100%;
     }
     .comment, .reply{
         padding: 1.6rem;
@@ -57,7 +154,7 @@ main{
             }
         }
         .inline{
-            min-width:24.3rem;
+            min-width:26.3rem;
             display: inline-flex;
             align-items: center;
             justify-content: space-between;
@@ -79,7 +176,7 @@ main{
                 font-size: 1.9rem;
             }
         }
-        .replyBtn{
+        .reply-btn{
             display: inline-flex;
             align-items: center;
             width: 6.6rem;
@@ -91,7 +188,38 @@ main{
             background-repeat: no-repeat;
             padding-left: 2rem;
         }
+        .reply-btn:hover{
+            cursor: pointer;
+        }
     }
     
+    .reply-to-div{
+        width: 90%;
+        min-width: 32.5rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        display: none;
+        input{
+            min-width: 31rem;
+            width: 100%;
+            height: 4.8rem;
+            border-radius: 0.8rem;
+        }
+    }
+    .score{
+        .plus:hover, .minus:hover{
+            cursor: pointer;
+        }
+    }
+}
 
+
+@media screen and (min-width: 1200px) {
+    .desktop-btns{
+        display: inline-flex;
+    }
+    .mobile-btns{
+        display: none;
+    }
 }
