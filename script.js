@@ -356,7 +356,7 @@ function deletePost(){
   //darken the body
   document.querySelectorAll('body *').forEach(element=>{
     if(element != commentContainer || element != reply){
-      element.style.filter = 'brightness(94%)';
+      element.style.filter = 'brightness(96%)';
     }
   });
   document.querySelector('body').style.background = 'hsl(214, 25%, 95%)';
