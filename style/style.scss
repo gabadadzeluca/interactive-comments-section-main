@@ -49,6 +49,7 @@ img{
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    z-index: 2;
     *{
         margin: 0;
     }
@@ -70,7 +71,6 @@ img{
         background-color: var(--soft-red);
     }
 }
-
 .comment-edit-div{
     display: flex;
     display: none;
@@ -100,6 +100,7 @@ button{
 }
 button:hover{
     cursor: pointer;
+    background-color: #C5C6EF;
 }
 input[type="textarea"]{
     border: 1px solid #E9EBF0;
@@ -108,7 +109,9 @@ input[type="textarea"]{
     padding: 1.2rem 1.2rem 2.4rem 1.2rem;
     min-height: 9.6rem;
 }
-
+input[type="textarea"]:hover{
+    cursor: pointer;
+}
 // edit and delete 
 .buttons-div{
     display: inline-flex;
@@ -122,6 +125,7 @@ input[type="textarea"]{
     }
     *:hover{
         cursor: pointer;
+        opacity: 0.6;
     }
     .delete-btn{
         background-image: url("../images/icon-delete.svg");
@@ -180,6 +184,17 @@ main{
     .reply{
         min-width: 32.5rem;
         width: 100%;
+        position: relative;
+    }
+    .reply::before {
+        content: "";
+        position: absolute;
+        left: -10%;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 2px;
+        height: 100%;
+        border-left: 2px solid #E9EBF0;
     }
     .comment, .reply{
         padding: 1.6rem;
@@ -257,6 +272,7 @@ main{
         }
         .reply-btn:hover{
             cursor: pointer;
+            opacity: 0.6;
         }
         .footer-comment{
             display: inline-flex;
@@ -287,6 +303,9 @@ main{
             width: 70%;
             min-height: 4.8rem;
             border-radius: 0.8rem;
+        }
+        button:hover{
+            background-color:#C5C6EF;
         }
 
     }
