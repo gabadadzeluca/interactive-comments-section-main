@@ -32,10 +32,11 @@ function displayComments(comments){
 
 // comment class
 class Comment {
-  constructor() {
+  constructor(createdAt) {
+    this.addedAt = new Date;
     this.replyingTo = '';
-    this.content = '';   //input.value;
-    this.createdAt = 'just now'; //change
+    this.content = ''; 
+    this.createdAt = createdAt; 
     this.score = 0;
     this.user = {
       image: {
@@ -45,7 +46,30 @@ class Comment {
     };
     this.replies = [];
   }
-} 
+
+  get timeSinceCreated() {
+    const currentTime = new Date();
+    const timeDifference = currentTime.getTime() - this.createdAt.getTime();
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(timeDifference / (1000 * 60 * 60));
+    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+    if(days < 1 && minutes > 59){
+      return hours;
+    }
+    if(minutes > 60 && hours<24){
+      return `${hours} hours ago`;
+    }
+    if(minutes < 60 && minutes>1){
+      return `${minutes} minutes ago`
+    }
+    if(hours > 24 && minutes >1){
+      return `${days} days ago`;
+    }
+    if(minutes == 0){
+      return 'just now';
+    }
+  }
+}
 
 // check for elements added from js
 const observer = new MutationObserver(function(mutations) {
@@ -222,7 +246,6 @@ function createCommentHTML(commentData, isReply) {
   commentHTML += '<div class="comment-replies">';
   // If the comment has replies display replies
   if (commentData.replies && commentData.replies.length > 0) {
-    // commentHTML += '<div class="comment-replies">';
     // Add HTML for each reply
     commentData.replies.forEach(function(reply) {
       commentHTML += createCommentHTML(reply, true);
@@ -247,8 +270,9 @@ function addComment(){
   if(input.value.length == 0) return; // stop if it's empty
   console.log(input.value);
 
-  const newComment = new Comment;
+  const newComment = new Comment(new Date());
   newComment.content = input.value;
+  newComment.createdAt = newComment.timeSinceCreated;
   // display comment
   commentHTML += createCommentHTML(newComment,false);
   document.querySelector('main').innerHTML = commentHTML;
@@ -299,7 +323,9 @@ function addReply(){
 
 
   // create new reply
-  const newReply = new Comment();
+  const newReply = new Comment(new Date());
+  newReply.createdAt = newReply.timeSinceCreated;
+
   newReply.replyingTo = replyingTo;
   if(input.value.slice(1,spaceIndex) !== replyingTo){
     newReply.content = input.value;
@@ -308,7 +334,6 @@ function addReply(){
 
   }
 
-  
   // div that the comment will be appended to  
   let replyToDiv = (this.parentElement.parentElement.lastElementChild);
   replyToDiv.innerHTML += createCommentHTML(newReply, true);
