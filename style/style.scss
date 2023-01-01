@@ -21,6 +21,9 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
+    *{
+        font-family: 'Rubik', sans-serif;
+    }
 }
 
 img{
@@ -43,26 +46,52 @@ img{
     height: 22.4rem;
     justify-content: space-between;
     border-radius: 0.8rem;
-
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    *{
+        margin: 0;
+    }
+    p{
+        color: var(--grayish-blue);
+    }
+    >div{// buttons div
+        display: inline-flex;
+        justify-content: space-between;
+    }
+    button{
+        width: 13.8rem;
+        text-transform: uppercase;
+        color: white;
+    }
+    button[value="cancel"]{
+        background-color: var(--grayish-blue);
+    }button[value="delete"]{
+        background-color: var(--soft-red);
+    }
 }
 
 .comment-edit-div{
+    display: flex;
     display: none;
+    flex-direction: column;
+    align-items: flex-end;
+    *{
+        margin-top: 2rem;
+    }
 }
 .comment-edit-form{
     width: 100%;
-    height: 9.6rem;
-    // overflow: hidden;
     resize: none;
     white-space: pre-wrap;
     font-size: 1.6rem;
 }
+
+
 button{
     width: 10.4rem;
     height: 4.8rem;
+    border:none;
     background-color: var(--moderate-blue);
     color: white;
     border-radius: 0.8rem;
@@ -71,6 +100,10 @@ button{
 }
 input[type="textarea"]{
     border: 1px solid #E9EBF0;
+    box-sizing: border-box;
+    border-radius: 0.8rem;
+    padding: 1.2rem 1.2rem 2.4rem 1.2rem;
+    min-height: 9.6rem;
 }
 
 // edit and delete 
@@ -93,7 +126,7 @@ input[type="textarea"]{
         color: var(--moderate-blue);
     }
 }
-.desktop-btns{
+.desktop{
     display: none;
 }
 
@@ -147,6 +180,14 @@ main{
         background-color: white;
         border-radius: 0.8rem;
         margin-top: 2rem;
+        .comment-main{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        .date{
+            color: var(--grayish-blue);
+        }
         .username{
             p{
                 color: var(--dark-blue);
@@ -154,10 +195,16 @@ main{
             }
         }
         .inline{
-            min-width:26.3rem;
+            min-width:25rem;
             display: inline-flex;
             align-items: center;
             justify-content: space-between;
+        }
+        .user-and-date{
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            min-width: 23rem;
         }
         .score{
             display: inline-flex;
@@ -176,8 +223,10 @@ main{
                 font-size: 1.9rem;
             }
         }
+        .desktop{
+            display: none;
+        }
         .reply-btn{
-            display: inline-flex;
             align-items: center;
             width: 6.6rem;
             height: 2.4rem;
@@ -191,21 +240,37 @@ main{
         .reply-btn:hover{
             cursor: pointer;
         }
+        .footer-comment{
+            display: inline-flex;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+            .reply-btn{
+                display: inline-flex;
+            }
+        }
     }
     
     .reply-to-div{
-        width: 90%;
+        box-sizing: border-box;
+        margin-top: 2rem;
+        border-radius: 0.8rem;
+        padding: 1.6rem;
+        background-color: white;
+        width: 100%;
         min-width: 32.5rem;
         display: inline-flex;
         align-items: center;
         justify-content: space-between;
         display: none;
         input{
-            min-width: 31rem;
-            width: 100%;
-            height: 4.8rem;
+            min-width: 20rem;
+            margin: 0 1rem;
+            width: 70%;
+            min-height: 4.8rem;
             border-radius: 0.8rem;
         }
+
     }
     .score{
         .plus:hover, .minus:hover{
@@ -213,13 +278,107 @@ main{
         }
     }
 }
+footer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    .comment-form{
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+        background-color: white;
+        box-sizing: border-box;
+        padding: 1.6rem;
+        min-height: 18.9rem;
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        .footer-inline{
+            display: inline-flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
 
+    
+}
 
 @media screen and (min-width: 1200px) {
-    .desktop-btns{
+    .desktop{
         display: inline-flex;
     }
-    .mobile-btns{
+    .mobile{
         display: none;
+    }
+    .pop-up-menu{
+        width: 40rem;
+        height: 25.2rem;
+        button{
+            width: 16.1rem;
+        }
+    }
+    
+    main{
+        .reply-to-div{
+            img{
+                width: 4rem;
+                height: 4rem;
+            }
+        }
+        .comment,.reply{
+            display: flex;
+            align-items: center;
+            .desktop{
+                display: inline-flex;
+            }
+            .score{
+                margin-right: 2rem;
+                display: flex;
+                flex-direction: column;
+                min-width: 4rem;
+                height: 10rem;
+                text-align: center;
+                *{
+                    width: 4rem;
+                    margin: 0;
+                }
+            }
+            .mobile{
+                display: none;
+            }
+            
+            .inline{
+                min-width: 40rem;
+                width: 100%;
+                justify-content: space-between;
+            }
+            .footer-comment{
+                .reply-btn{
+                    display: none;
+                }
+            }
+            
+        }
+
+    }
+    footer{
+        img{
+            width: 4rem;
+            height: 4rem;
+        }
+        .comment-form{
+            flex-direction: row;
+            justify-content:space-between;
+            align-items: flex-start;
+            input{
+                width: 70%;
+            }
+            button{
+                display: block;
+            }
+            .footer-inline{
+                display: none;
+            }
+        }
     }
 }
