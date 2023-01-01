@@ -367,20 +367,23 @@ function deletePost(){
     }else{
       commentContainer.remove();
     }
-    popUpMenu.style.display = 'none';
-    document.querySelector('body').style.background = 'var(--light-gray)';
-    document.querySelector('body').style.overflow = 'scroll';
-    document.querySelectorAll('body *').forEach(element=>{
-      element.style.filter = 'brightness(100%)';
-    });
+    hideMenu();
   });
 
   cancelConfirm.addEventListener('click', ()=>{
-    popUpMenu.style.display = 'none';
+    hideMenu();
   });
 }
 
 
+function hideMenu(){
+  popUpMenu.style.display = 'none';
+  document.querySelector('body').style.background = 'var(--light-gray)';
+  document.querySelector('body').style.overflow = 'scroll';
+  document.querySelectorAll('body *').forEach(element=>{
+    element.style.filter = 'brightness(100%)';
+  });
+}
 
 function displayEditDiv(){
   // comment/reply div
