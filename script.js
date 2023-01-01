@@ -73,7 +73,7 @@ const observer = new MutationObserver(function(mutations) {
       if (replyBtns.length != 0) {
         replyBtns.forEach(btn=>{
           // get 'reply-to-div' elements
-          const replyToDiv =  btn.parentElement.parentElement.children[1];
+          const replyToDiv =  btn.parentElement.parentElement.parentElement.querySelector('.reply-to-div');
           replyToDiv.style.display = 'none';
           btn.addEventListener('click', displayReply)
         });
@@ -152,13 +152,12 @@ function createCommentHTML(commentData, isReply) {
     commentHTML += '<div class="delete-btn">Delete</div>';
     commentHTML += '<div class="edit-btn">Edit</div>' +  '</div>';
   }
-
   // close inline div
   commentHTML += '</div>'
   
   // add tag
   let replyDiv;
-  isReply? replyDiv = `<span class="tag">@${commentData.replyingTo}</span>` : replyDiv = '';
+  isReply? replyDiv = `<span class="tag">@${commentData.replyingTo} </span>` : replyDiv = '';
 
   //content div
   commentHTML += '<div class="comment-content">' + `<p>${replyDiv}${commentData.content}</p>`;
@@ -172,6 +171,9 @@ function createCommentHTML(commentData, isReply) {
   // close content div
   commentHTML += '</div>'
 
+
+  // open footer div of a comment/reply
+  commentHTML += '<div class="footer-comment">'
   // score
   commentHTML += '<div class="score">' + `<p class="plus" data-voted="false">+</p><p class="score-count">${commentData.score}</p><p class="minus" data-voted="false">-</p>` + '</div>';
 
@@ -184,7 +186,8 @@ function createCommentHTML(commentData, isReply) {
     // reply button
     commentHTML += '<div class="reply-btn">' + 'Reply' + '</div>';
   }
-  
+  // close footer div
+  commentHTML += '</div>'  
     
   // close the comment div
   commentHTML += '</div>';
@@ -241,11 +244,11 @@ commentBtn.addEventListener('click', addComment);
 
 let replyingTo;
 function displayReply(){
-  
   // parent container
-  const parentDiv = this.parentElement.parentElement;
+  const parentDiv = this.parentElement.parentElement.parentElement;
+
   // comment/reply that user is replying to
-  const commentDiv = this.parentElement;
+  const commentDiv = this.parentElement.parentElement;
   // pop up reply div
   const replyInputDiv = parentDiv.children[1];
   // if closed pop up
@@ -321,7 +324,6 @@ function changeScore(){
 // let user delete their posts
 function deletePost(){
   const commentContainer = this.parentElement.parentElement.parentElement.parentElement;
-
   const reply = this.parentElement.parentElement;
 
   // pop up a menu
