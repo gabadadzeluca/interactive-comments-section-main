@@ -1,6 +1,6 @@
 "use strict"; 
 
-let currentImg;
+let currentImgSrc;
 let currentUsername;
 
 // pop up menu
@@ -39,7 +39,7 @@ class Comment {
     this.score = 0;
     this.user = {
       image: {
-        webp: currentImg.src
+        webp: currentImgSrc
       },
       username: currentUsername,
     };
@@ -113,9 +113,12 @@ const observer = new MutationObserver(function(mutations) {
 observer.observe(document.querySelector('main'), { childList: true });
 
 function displayCurrentUser(userData){
-  currentImg = document.querySelector('footer img');
-  currentImg.src = userData.image.webp;
+  currentImgSrc = userData.image.webp;
   currentUsername = userData.username;
+  const footerImgs = document.querySelectorAll('footer img');
+  footerImgs.forEach(img=>{
+    img.src = currentImgSrc;
+  });
   console.log("logged in as "+currentUsername);
 }
 
@@ -148,9 +151,12 @@ function createCommentHTML(commentData, isReply) {
   // if current user is the author let them delete or edit it
   // desktop layout buttons
   if(commentData.user.username == currentUsername){
-    commentHTML += '<div class="buttons-div desktop-btns">';
+    commentHTML += '<div class="buttons-div desktop">';
     commentHTML += '<div class="delete-btn">Delete</div>';
     commentHTML += '<div class="edit-btn">Edit</div>' +  '</div>';
+  }else{
+    // reply button
+    commentHTML += '<div class="reply-btn  desktop">' + 'Reply' + '</div>';
   }
   // close inline div
   commentHTML += '</div>'
@@ -179,12 +185,12 @@ function createCommentHTML(commentData, isReply) {
 
 
   if(commentData.user.username == currentUsername){
-    commentHTML += '<div class="buttons-div mobile-btns">';
+    commentHTML += '<div class="buttons-div mobile">';
     commentHTML += '<div class="delete-btn">Delete</div>';
     commentHTML += '<div class="edit-btn">Edit</div>' +  '</div>';
   }else{
     // reply button
-    commentHTML += '<div class="reply-btn">' + 'Reply' + '</div>';
+    commentHTML += '<div class="reply-btn  mobile">' + 'Reply' + '</div>';
   }
   // close footer div
   commentHTML += '</div>'  
@@ -193,7 +199,7 @@ function createCommentHTML(commentData, isReply) {
   commentHTML += '</div>';
 
   // add reply div&button to every element
-  commentHTML += '<div class="reply-to-div">' + `<img src=${currentImg.src}>`;
+  commentHTML += '<div class="reply-to-div">' + `<img src=${currentImgSrc}>`;
   commentHTML += '<input type="textarea" class="reply-to-container">';
   commentHTML += '<button class="add-reply-btn">REPLY</button>';
   commentHTML += '</div>';
@@ -238,8 +244,10 @@ function addComment(){
   input.value = '';
 }
 
-const commentBtn = document.getElementById('add-comment-btn');
-commentBtn.addEventListener('click', addComment);
+const commentBtns = document.querySelectorAll('.add-comment-btn');
+commentBtns.forEach(btn=>{
+  btn.addEventListener('click', addComment);
+});
 
 
 let replyingTo;
@@ -276,10 +284,17 @@ function addReply(){
   const spaceIndex = input.value.indexOf(" ");
   if(input.value.slice(spaceIndex + 1).length == 0) return; // stop if it's empty
 
-  // create new reply div
+
+  // create new reply
   const newReply = new Comment();
   newReply.replyingTo = replyingTo;
-  newReply.content = input.value.slice(spaceIndex); // get everything except the tag word
+  if(input.value.slice(1,spaceIndex) !== replyingTo){
+    newReply.content = input.value;
+  }else{
+    newReply.content = input.value.slice(spaceIndex); // get everything except the tag word
+
+  }
+
   
   // div that the comment will be appended to  
   let replyToDiv = (this.parentElement.parentElement.lastElementChild);
