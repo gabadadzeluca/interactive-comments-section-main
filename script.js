@@ -312,8 +312,7 @@ function addReply(){
 function changeScore(){
   if(this.getAttribute('data-voted') == 'true') return;
   let action = this.innerHTML;
-  let score = this.parentElement.children[1].innerHTML;
-
+  let score = this.parentElement.querySelector('.score-count').innerHTML;
   // get both elements
   let oppositeAction = action === '+' ? 'minus' : 'plus';
   let oppositeElement = this.parentElement.querySelector(`.${oppositeAction}`);
@@ -324,7 +323,7 @@ function changeScore(){
     score--;
   }
   
-  this.parentElement.children[1].innerHTML = score;
+  this.parentElement.querySelector('.score-count').innerHTML = score;
   this.setAttribute('data-voted', true);
   // if they're both clicked, the value is same, reset both to false;
   if(this.getAttribute('data-voted') == "true" && oppositeElement.getAttribute('data-voted') == "true"){
