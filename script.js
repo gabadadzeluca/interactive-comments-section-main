@@ -344,8 +344,6 @@ function changeScore(){
     oppositeElement.setAttribute('data-voted', false);
   }
 
-
-  // add class to style checked element
 }
 
 // let user delete their posts
@@ -355,14 +353,26 @@ function deletePost(){
 
   // pop up a menu
   popUpMenu.style.display = 'flex';
+  //darken the body
+  document.querySelectorAll('body *').forEach(element=>{
+    if(element != commentContainer || element != reply){
+      element.style.filter = 'brightness(95%)';
+    }
+  });
+  document.querySelector('body').style.background = 'hsl(214, 25%, 95%)';
+  document.querySelector('body').style.overflow = 'hidden';
   deleteConfirm.addEventListener('click', ()=>{
-    // commentContainer.remove();
     if(reply.className == 'reply'){
       reply.remove();
     }else{
       commentContainer.remove();
     }
     popUpMenu.style.display = 'none';
+    document.querySelector('body').style.background = 'var(--light-gray)';
+  document.querySelector('body').style.overflow = 'scroll';
+  document.querySelectorAll('body *').forEach(element=>{
+    element.style.filter = 'brightness(100%)';
+  });
   });
 
   cancelConfirm.addEventListener('click', ()=>{
