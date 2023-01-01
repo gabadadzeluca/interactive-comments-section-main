@@ -138,16 +138,22 @@ function createCommentHTML(commentData, isReply) {
   commentHTML += `<div class="${className}-container">`;
 
   commentHTML += `<div class=${className}>`;
+  
+  // score (desktop)
+  commentHTML += '<div class="score desktop">' + `<p class="plus" data-voted="false">+</p><p class="score-count">${commentData.score}</p><p class="minus" data-voted="false">-</p>` + '</div>';
 
   // open inline div
   commentHTML += '<div class="inline">';
+  // user div
+  commentHTML += '<div class="user-and-date">';
   //add img
   commentHTML += '<div class="comment-author">' + `<img src=${commentData.user.image.webp}>` + '</div>';
   //add username
   commentHTML += '<div class="username">' + `<p>${commentData.user.username}</p></div>`;
   // add date
   commentHTML += '<div class="date">' + commentData.createdAt + '</div>';
-
+  // close user-date div
+  commentHTML += '</div>';
   // if current user is the author let them delete or edit it
   // desktop layout buttons
   if(commentData.user.username == currentUsername){
@@ -180,8 +186,8 @@ function createCommentHTML(commentData, isReply) {
 
   // open footer div of a comment/reply
   commentHTML += '<div class="footer-comment">'
-  // score
-  commentHTML += '<div class="score">' + `<p class="plus" data-voted="false">+</p><p class="score-count">${commentData.score}</p><p class="minus" data-voted="false">-</p>` + '</div>';
+  // score (mobile)
+  commentHTML += '<div class="score mobile">' + `<p class="plus" data-voted="false">+</p><p class="score-count">${commentData.score}</p><p class="minus" data-voted="false">-</p>` + '</div>';
 
 
   if(commentData.user.username == currentUsername){
@@ -267,7 +273,7 @@ function displayReply(){
   }
 
   // get comment/reply div 
-  replyingTo = commentDiv.children[0].querySelector('.username').innerText;
+  replyingTo = commentDiv.querySelector('.username').innerText;
 
   //access input div
   const input = replyInputDiv.querySelector('input');
