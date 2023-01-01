@@ -356,7 +356,7 @@ function deletePost(){
   //darken the body
   document.querySelectorAll('body *').forEach(element=>{
     if(element != commentContainer || element != reply){
-      element.style.filter = 'brightness(95%)';
+      element.style.filter = 'brightness(94%)';
     }
   });
   document.querySelector('body').style.background = 'hsl(214, 25%, 95%)';
@@ -369,10 +369,10 @@ function deletePost(){
     }
     popUpMenu.style.display = 'none';
     document.querySelector('body').style.background = 'var(--light-gray)';
-  document.querySelector('body').style.overflow = 'scroll';
-  document.querySelectorAll('body *').forEach(element=>{
-    element.style.filter = 'brightness(100%)';
-  });
+    document.querySelector('body').style.overflow = 'scroll';
+    document.querySelectorAll('body *').forEach(element=>{
+      element.style.filter = 'brightness(100%)';
+    });
   });
 
   cancelConfirm.addEventListener('click', ()=>{
