@@ -11,12 +11,27 @@
   
 </head>
 <body>
-  <main></main>
+  <div class="pop-up-menu">
+    <h3>Delete comment</h3>
+    <p>Are you sure you want to delete this comment? This will remove the comment and can't be undone.</p>
+    <div>
+      <button value="cancel">No, cancel</button>
+      <button value="delete">Yes, delete</button>
+    </div>
+  </div>
+  <main>
+  </main>
   <footer>
     <div class="comment-form">
-      <input type="textarea">
-      <img alt="profile-pic">
-      <button type="submit">SEND</button>
+      <img alt="profile-pic" class="desktop">
+      <input type="textarea" id="new-comment" placeholder="Add a comment...">
+      <button type="submit" class="add-comment-btn desktop">SEND</button>
+
+      <div class="footer-inline mobile">
+        <img alt="profile-pic">
+        <button type="submit" class="add-comment-btn mobile">SEND</button>
+      </div>
+
     </div>
   </footer>
 </body>
